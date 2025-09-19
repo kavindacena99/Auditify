@@ -7,6 +7,7 @@ import Contact from "./pages/Contact";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Blog from "./pages/Blog";
+import Admin from "./pages/admin/Dashboard"
 
 function App(){
   return(
@@ -19,6 +20,7 @@ function App(){
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/admin/dashboard" element={<Admin />} />
       </Routes>
     </Router>
   );

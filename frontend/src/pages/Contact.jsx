@@ -1,19 +1,23 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import API from "../services/api";
 
 function Contact(){
-    const [form, setForm] = useState({ name: "", email: "", message: "" });
+    const [ name, setName] = useState("");
+    const [ email, setEmail] = useState("");
+    const [ message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form);
-    alert("Message sent!"); // Replace with API call
-    setForm({ name: "", email: "", message: "" });
-  };
+        try{
+            await API.post("/auth/register",{ name, email, message });
+            Navigate("/");
+        }catch(error){
+            setError("Registration failed!");
+        }
+    };
+
     return(
         <div>
             <Navbar />
@@ -25,26 +29,24 @@ function Contact(){
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <input
                             type="text"
-                            name="name"
-                            value={form.name}
-                            onChange={handleChange}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             placeholder="Your Name"
                             className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                             required
                         />
                         <input
                             type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="Your Email"
                             className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                             required
                         />
                         <textarea
                             name="message"
-                            value={form.message}
-                            onChange={handleChange}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                             placeholder="Your Message"
                             className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                             rows={5}

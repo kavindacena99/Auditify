@@ -16,9 +16,11 @@ function Navbar(){
                         <a href="/services" className="text-gray-700 hover:text-blue-600">Services</a>
                         <a href="/blog" className="text-gray-700 hover:text-blue-600">Blog</a>
                     </div>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                        Login
-                    </button>
+                    <div>
+                        <a href="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                            Login
+                        </a>
+                    </div>
 
                     <div className="md:hidden ml-4">
                         <button
@@ -45,9 +47,6 @@ function Navbar(){
                     <a href="/about" className="block text-gray-700 hover:text-blue-600">About</a>
                     <a href="/services" className="block text-gray-700 hover:text-blue-600">Services</a>
                     <a href="/blog" className="text-gray-700 hover:text-blue-600">Blog</a>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                        Login
-                    </button>
                 </div>
             )}
         </nav>

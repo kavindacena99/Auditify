@@ -1,21 +1,33 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Brandname from "../components/Brandname";
+import API from '../services/api';
 
 function Signup(){
+    const [ firstname, setFirstname] = useState("");
+    const [ lastname, setLastname] = useState("");
+    const [ email, setEmail] = useState("");
+    const [ password, setPassword] = useState("");
+    const [ confirmpassword, setConfirmpassword] = useState("");
+    const [ error, setError] = useState("");
 
-        const [form, setForm] = useState({ name: "", email: "", password: "" });
+    const Navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form); // Replace with API call to backend
-    alert("Signup successful!");
-    setForm({ name: "", email: "", password: "" });
-  };
+        if(password !== confirmpassword){
+            setError("Password do not match!");
+            return;
+        }
 
+        try{
+            await API.post("/auth/register",{ firstname, lastname, email, password });
+            Navigate("/login");
+        }catch(error){
+            setError("Registration failed!");
+        }
+    };
 
 
     return(
@@ -23,31 +35,44 @@ function Signup(){
             <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
                 <Brandname />
                 <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleRegister} className="space-y-4">
                     <input
                         type="text"
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        placeholder="Full Name"
+                        value={firstname}
+                        onChange={(e) => setFirstname(e.target.value)}
+                        placeholder="First Name"
+                        className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        required
+                    />
+                    <input
+                        type="text"
+                        value={lastname}
+                        onChange={(e) => setLastname(e.target.value)}
+                        placeholder="Last Name"
                         className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         required
                     />
                     <input
                         type="email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                         className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         required
                     />
                     <input
                         type="password"
-                        name="password"
-                        value={form.password}
-                        onChange={handleChange}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
+                        className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        required
+                    />
+                    <input
+                        type="password"
+                        value={confirmpassword}
+                        onChange={(e) => setConfirmpassword(e.target.value)}
+                        placeholder="Confirm Password"
                         className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         required
                     />
