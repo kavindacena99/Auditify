@@ -5,7 +5,7 @@ function Navbar(){
     const [isOpen, setIsOpen] = useState(false);
 
     return(
-        <nav className="bg-white shadow-md">
+        <nav className="bg-white shadow-md border-b-2 border-blue-800">
             <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                 <Brandname />
 
@@ -14,6 +14,7 @@ function Navbar(){
                         <a href="/contact" className="text-gray-700 hover:text-blue-600">Contact</a>
                         <a href="/about" className="text-gray-700 hover:text-blue-600">About</a>
                         <a href="/services" className="text-gray-700 hover:text-blue-600">Services</a>
+                        <a href="/blog" className="text-gray-700 hover:text-blue-600">Blog</a>
                     </div>
                     <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                         Login
@@ -43,6 +44,7 @@ function Navbar(){
                     <a href="/contact" className="block text-gray-700 hover:text-blue-600">Contact</a>
                     <a href="/about" className="block text-gray-700 hover:text-blue-600">About</a>
                     <a href="/services" className="block text-gray-700 hover:text-blue-600">Services</a>
+                    <a href="/blog" className="text-gray-700 hover:text-blue-600">Blog</a>
                     <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                         Login
                     </button>
