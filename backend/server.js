@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
+const authController = require("./controllers/authController");
 
 dotenv.config(); // load env variables
 
@@ -18,6 +19,7 @@ mongoose
 .catch((err) => console.log("MongoDB Error", err));
 
 // routes
+app.use("/api/auth",authController);
 
 // server starts
 const PORT = process.env.PORT || 5000;
