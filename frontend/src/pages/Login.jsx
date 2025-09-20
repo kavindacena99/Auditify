@@ -21,9 +21,9 @@ function Login(){
             localStorage.setItem("user", JSON.stringify(user));
 
             if(user["role"] === "admin"){
-                navigate();
+                navigate('/admin/dashboard');
             }else{
-                navigate();    
+                navigate('/client/dashboard');    
             }
         }catch(error){
             setError("Login Failed!");

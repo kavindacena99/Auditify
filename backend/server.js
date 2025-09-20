@@ -3,6 +3,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
 const authController = require("./controllers/authController");
+const clientController = require("./controllers/clientController");
+const serviceController = require("./controllers/serviceController");
 
 dotenv.config(); // load env variables
 
@@ -19,7 +21,9 @@ mongoose
 .catch((err) => console.log("MongoDB Error", err));
 
 // routes
-app.use("/api/auth",authController);
+app.use("/api/auth", authController);
+app.use("/api/inquiry", clientController);
+app.use("/api/service", serviceController);
 
 // server starts
 const PORT = process.env.PORT || 5000;

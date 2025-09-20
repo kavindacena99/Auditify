@@ -1,81 +1,62 @@
-// src/admin/ServicesManagement.jsx
 import React, { useEffect, useState } from "react";
-import api from "../api";
+import API from '../services/api';
+import { useNavigate } from "react-router-dom";
 
-export default function ServicesManagement() {
-  const [services, setServices] = useState([]);
-  const [form, setForm] = useState({ title: "", description: "" });
-  const [editing, setEditing] = useState(null);
+function ServiceManagement(){
+  const [ title, setTitle] = useState("");
+  const [ description, setDescription] = useState("");
+  const [ error, setError] = useState("");
+  const [ services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const load = async () => {
-    setLoading(true);
-    try {
-      const res = await api.fetchServices();
-      setServices(res.data || []);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
+  const Navigate = useNavigate();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try{
+        await API.post("/service/admin/add",{ title, description });
+        Navigate("/admin/dashboard");
+        fetchServices();
+    }catch(error){
+        setError("Registration failed!");
     }
   };
 
-  useEffect(() => { load(); }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (editing) {
-        await api.updateService(editing._id, form);
-      } else {
-        await api.createService(form);
-      }
-      setForm({ title: "", description: "" });
-      setEditing(null);
-      load();
-    } catch (err) { console.error(err); }
+  const fetchServices = async () => {
+    try{
+      const service = await API.get("/service/admin/load");
+      setServices(service.data);
+    }catch(error){
+      console.error("Erorr loading services");
+    }
   };
 
-  const handleEdit = (s) => {
-    setEditing(s);
-    setForm({ title: s.title, description: s.description });
-  };
+  useEffect(() => {
+    fetchServices();
+  }, []);
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete this service?")) return;
-    await api.deleteService(id);
-    load();
+    try{
+      const service = await API.delete(`/service/admin/delete/${id}`);
+      fetchServices();
+    }catch(error){
+      console.error("Delete error");
+    }
   };
 
-  return (
+
+  return(
     <div>
       <h3 className="text-xl font-semibold mb-4">Services Management</h3>
-
       <div className="bg-white p-4 rounded-md shadow">
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            className="w-full p-2 border rounded"
-            placeholder="Service title"
-            value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
-            required
-          />
-          <textarea
-            className="w-full p-2 border rounded"
-            placeholder="Short description"
-            value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
-            required
-          />
+        <form className="space-y-3" onSubmit={handleSubmit}>
+          <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full p-2 border rounded" required />
+          <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full p-2 border rounded" required />
           <div className="flex gap-2">
             <button className="bg-blue-600 text-white px-4 py-2 rounded">
-              {editing ? "Update Service" : "Add Service"}
+              Add a Service
             </button>
-            {editing && (
-              <button type="button" className="px-4 py-2 border rounded" onClick={() => { setEditing(null); setForm({ title: "", description: "" }); }}>
-                Cancel
-              </button>
-            )}
           </div>
         </form>
       </div>
@@ -95,7 +76,6 @@ export default function ServicesManagement() {
                   <div className="text-sm text-gray-600">{s.description}</div>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => handleEdit(s)} className="px-3 py-1 border rounded">Edit</button>
                   <button onClick={() => handleDelete(s._id)} className="px-3 py-1 border rounded text-red-600">Delete</button>
                 </div>
               </div>
@@ -106,3 +86,5 @@ export default function ServicesManagement() {
     </div>
   );
 }
+
+export default ServiceManagement;

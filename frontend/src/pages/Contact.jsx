@@ -1,17 +1,21 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import API from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Contact(){
     const [ name, setName] = useState("");
     const [ email, setEmail] = useState("");
     const [ message, setMessage] = useState("");
+    const [ error, setError] = useState("");
+
+    const Navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try{
-            await API.post("/auth/register",{ name, email, message });
+            await API.post("/inquiry/client/submit",{ name, email, message });
             Navigate("/");
         }catch(error){
             setError("Registration failed!");
