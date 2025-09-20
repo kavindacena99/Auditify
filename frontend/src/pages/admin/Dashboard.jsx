@@ -1,7 +1,7 @@
-// src/AdminDashboard.jsx
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import ServicesManagement from "../../components/ServiceManagement";
+import AuthButton from "../../components/AuthButton";
 
 
 const nav = [
@@ -44,9 +44,8 @@ function Dashboard() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
       <aside
-        className={`fixed z-30 inset-y-0 left-0 w-64 bg-blue-900 text-white transform transition-transform duration-200
+        className={`fixed z-30 inset-y-0 left-0 w-64 bg-blue-400 text-white transform transition-transform duration-200
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative`}
       >
         <div className="flex items-center justify-between p-4 border-b border-blue-800">
@@ -71,10 +70,10 @@ function Dashboard() {
               {n.label}
             </button>
           ))}
+        <AuthButton />
         </nav>
       </aside>
 
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-20 md:hidden"
@@ -82,18 +81,15 @@ function Dashboard() {
         />
       )}
 
-      {/* Main */}
       <div className="flex-1 flex flex-col">
-        {/* Top bar (mobile) */}
         <header className="md:hidden flex items-center justify-between bg-white p-3 shadow">
           <button onClick={() => setSidebarOpen(true)}>
             <FiMenu className="w-6 h-6 text-gray-700" />
           </button>
           <div className="font-semibold">Admin Panel</div>
-          <div /> {/* placeholder for avatar/controls */}
+          <div />
         </header>
 
-        {/* Content */}
         <main className="flex-1 overflow-y-auto">
           <div className="p-4 md:p-6">{renderContent()}</div>
         </main>

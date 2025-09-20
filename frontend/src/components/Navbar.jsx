@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Brandname from "./Brandname";
+import AuthButton from "./AuthButton";
 
 function Navbar(){
     const [isOpen, setIsOpen] = useState(false);
@@ -16,11 +17,7 @@ function Navbar(){
                         <a href="/services" className="text-gray-700 hover:text-blue-600">Services</a>
                         <a href="/blog" className="text-gray-700 hover:text-blue-600">Blog</a>
                     </div>
-                    <div>
-                        <a href="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                            Login
-                        </a>
-                    </div>
+                    <AuthButton />
 
                     <div className="md:hidden ml-4">
                         <button

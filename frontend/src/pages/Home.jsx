@@ -1,11 +1,5 @@
 import Navbar from "../components/Navbar";
-
-const services = [
-  { title: "Financial Audit", description: "Ensure accurate financial statements and compliance." },
-  { title: "Tax Advisory", description: "Optimize your tax strategy and stay compliant." },
-  { title: "Risk Management", description: "Identify risks and protect your business." },
-  { title: "Compliance Audit", description: "Ensure your business follows regulations." },
-];
+import OurServices from "../components/OurServices";
 
 const testimonials = [
   { name: "John Doe", feedback: "AuditCo helped us streamline our finances and stay compliant." },
@@ -25,15 +19,7 @@ function Home(){
             </section>
 
             <section className="py-20 bg-gray-100 text-center">
-                <h2 className="text-3xl font-bold mb-10">Our Services</h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto px-4">
-                {services.map((service, index) => (
-                    <div key={index} className="bg-white p-6 rounded shadow hover:shadow-lg transition">
-                    <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                    <p className="text-gray-600">{service.description}</p>
-                    </div>
-                ))}
-                </div>
+                <OurServices />
             </section>
 
             <section className="py-20 text-center max-w-4xl mx-auto px-4">
