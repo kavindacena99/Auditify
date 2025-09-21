@@ -1,30 +1,23 @@
 import Navbar from "../components/Navbar";
-
-const blogs = [
-  {
-    title: "Why Financial Audits are Important",
-    date: "September 15, 2025",
-    author: "AuditCo Team",
-    description: "Learn why regular financial audits can protect your business and build trust with stakeholders.",
-    image: "https://via.placeholder.com/400x200",
-  },
-  {
-    title: "Top 5 Tax Mistakes to Avoid",
-    date: "September 10, 2025",
-    author: "AuditCo Experts",
-    description: "Discover common tax mistakes businesses make and how to avoid them with professional advice.",
-    image: "https://via.placeholder.com/400x200",
-  },
-  {
-    title: "Risk Management in 2025",
-    date: "September 5, 2025",
-    author: "AuditCo Insights",
-    description: "An overview of modern risk management practices to safeguard your company.",
-    image: "https://via.placeholder.com/400x200",
-  },
-];
-
+import API from "../services/api";
+import { useEffect, useState } from "react";
+    
 function Blog(){
+    const [ blogs, setBlogs] = useState([]);
+
+    const fetchBlogs = async () => {
+        try{
+          const blog = await API.get("/blog/admin/blogs");
+          setBlogs(blog.data);
+        }catch(error){
+          console.error("Erorr loading services");
+        }
+    };
+
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
+
     return(
         <div>
             <Navbar />
@@ -38,7 +31,7 @@ function Blog(){
                         className="bg-white rounded shadow hover:shadow-lg transition"
                         >
                         <img
-                            src={blog.image}
+                            src={blog.imageUrl}
                             alt={blog.title}
                             className="w-full h-48 object-cover rounded-t"
                         />

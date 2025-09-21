@@ -1,13 +1,16 @@
 const express = require('express');
 const Blog = require('../models/Blog');
+const multer = require('multer');
+const upload = require('../middlewares/upload');
 
 const router = express.Router();
 
-router.post("/admin/submit", async (req, res) => {
+router.post("/admin/submit", upload.single('image'), async (req, res) => {
     try{
         const { title, content, author, description } = req.body;
+        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
-        const newBlog = new Blog({ title, content, author, description });
+        const newBlog = new Blog({ title, content, author, description, imageUrl });
         await newBlog.save();
 
         res.status(201).json({ message: "Blog submtted successfully", blog: newBlog });

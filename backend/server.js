@@ -6,6 +6,7 @@ const authController = require("./controllers/authController");
 const clientController = require("./controllers/clientController");
 const serviceController = require("./controllers/serviceController");
 const blogController = require("./controllers/blogController");
+const path = require("path");
 
 dotenv.config(); // load env variables
 
@@ -26,6 +27,8 @@ app.use("/api/auth", authController);
 app.use("/api/inquiry", clientController);
 app.use("/api/service", serviceController);
 app.use("/api/blog", blogController);
+
+app.use('/uploads', express.static('uploads'));
 
 // server starts
 const PORT = process.env.PORT || 5000;

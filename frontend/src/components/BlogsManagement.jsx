@@ -8,16 +8,18 @@ function BlogsManagement(){
   const [ author, setAuthor] = useState("");
   const [ description, setDescription] = useState("");
   const [ error, setError] = useState("");
+  const [ image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try{
-        await API.post("/blog/admin/submit",{ title, content, author, description });
+        await API.post("/blog/admin/submit",{ title, content, author, description, image }, { headers: { 'Content-Type': 'multipart/form-data'}});
         setAuthor("");
         setContent("");
         setDescription("");
         setTitle("");
+        setImage(null);
         fetchBlogs();
     }catch(error){
         setError("Registration failed!");
@@ -37,6 +39,15 @@ function BlogsManagement(){
     fetchBlogs();
   }, []);
 
+  const remove = async (id) => {
+    try{
+      const blog = await API.delete(`/blog/admin/delete/${id}`);
+      fetchBlogs();
+    }catch(error){
+      console.error("Delete error");
+    }
+  };
+
   return(
     <div>
       <h3 className="text-xl font-semibold mb-4">Blog Management</h3>
@@ -49,6 +60,7 @@ function BlogsManagement(){
           </div>
           <input placeholder="Short description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full p-2 border rounded"/>
           <textarea required placeholder="Content" value={content} onChange={(e) => setContent(e.target.value)} className="w-full p-2 border rounded" rows={6}/>
+            <input type="file" className="border p-2 rounded" accept="image/*" onChange={(e) => setImage(e.target.files[0])} required />
           <div className="flex gap-2">
             <button className="bg-blue-600 text-white px-4 py-2 rounded">Create Post</button>
           </div>
@@ -66,6 +78,7 @@ function BlogsManagement(){
                   <div className="text-sm text-gray-500">{b.date} • {b.author}</div>
                 </div>
                 <div className="flex gap-2">
+                  <button onClick={()=>remove(b._id)} className="px-3 py-1 border rounded text-red-600">Delete</button>
                 </div>
               </div>
               <p className="text-gray-700 mt-2">{b.description}</p>
