@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import ServicesManagement from "../../components/ServiceManagement";
 import AuthButton from "../../components/AuthButton";
-
+import ClientsManagement from "../../components/ClientManagement";
+import BlogsManagement from "../../components/BlogsManagement";
 
 const nav = [
   { id: "dashboard", label: "Dashboard" },

@@ -5,6 +5,7 @@ const { default: mongoose } = require("mongoose");
 const authController = require("./controllers/authController");
 const clientController = require("./controllers/clientController");
 const serviceController = require("./controllers/serviceController");
+const blogController = require("./controllers/blogController");
 
 dotenv.config(); // load env variables
 
@@ -24,6 +25,7 @@ mongoose
 app.use("/api/auth", authController);
 app.use("/api/inquiry", clientController);
 app.use("/api/service", serviceController);
+app.use("/api/blog", blogController);
 
 // server starts
 const PORT = process.env.PORT || 5000;
